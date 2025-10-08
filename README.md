@@ -124,7 +124,10 @@ git push -u origin main
      - `/messages` routing after SSE established
      - Error responses on missing/invalid token
      - Health (`/health`) and auth on `/ingest`
-   - Validate with at least one MCP client (ChatGPT custom connector or Claude/Continue) and capture traces.
+     - Validate with at least one MCP client (ChatGPT custom connector or Claude/Continue) and capture traces. Cloudflare Tunnel will be required for this via:
+                                            brew install cloudflare/cloudflare/cloudflared   # or use your package manager
+                                            cloudflared tunnel --url http://127.0.0.1:3001   # replace 3001 with your local MCP port
+                                            # copy the https URL and add it to UPSTREAM_URLS or your admin UI
 
 2) **PostgreSQL persistence (self‑hosted)**  
    - Install Postgres on droplet:
