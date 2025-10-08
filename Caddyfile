@@ -1,0 +1,26 @@
+{
+    email {$ACME_EMAIL}
+}
+
+{$DOMAIN} {
+    encode zstd gzip
+    @sse path /sse
+    reverse_proxy @sse gateway:${GATEWAY_PORT} {
+        header_up Host {host}
+        header_up X-Forwarded-Proto {scheme}
+        header_up X-Forwarded-For {remote}
+        # SSE-friendly timeouts
+        transport http {
+            keepalive 60s
+            read_timeout  1h
+            write_timeout 1h
+        }
+    }
+
+    # Health (optional)
+    @health path /health
+    reverse_proxy @health gateway:${GATEWAY_PORT}
+
+    # Fallback everything else to the gateway
+    reverse_proxy gateway:${GATEWAY_PORT}
+}

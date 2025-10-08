@@ -1,0 +1,8 @@
+{
+  "servers": [
+    {
+      "label": "whisper",
+      "url": "https://your-whisper-mcp.example.com/sse"
+    }
+  ]
+}
